@@ -1,0 +1,6 @@
+1. "transitionend" event fired at the end of transition of element
+2. audio.play() -> to start playing the audio
+	audio.currentTime=0 =>resets the audio playstamp to zero
+3. data-* => * represents any lowercase word/identifier to pass custom attributes to HTML elements
+4. <kbd> tag can be used to represent user keyboard/voice input.. It just gives a default look which can be modified by CSS
+
