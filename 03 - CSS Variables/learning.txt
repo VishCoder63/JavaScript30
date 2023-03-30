@@ -1,0 +1,6 @@
+declare css variable: :root{
+--base:10px;}
+//here base is the variable
+use inside other styles using var(--base)
+
+
