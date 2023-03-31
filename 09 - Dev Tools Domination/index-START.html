@@ -1,47 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console Tricks!</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+    <script>
+      const dogs = [
+        { name: "Snickers", age: 2 },
+        { name: "hugo", age: 8 },
+      ];
 
-  <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+      function makeGreen() {
+        const p = document.querySelector("p");
+        p.style.color = "#BADA55";
+        p.style.fontSize = "50px";
+      }
 
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
-    }
+      // Regular
 
-    // Regular
+      // Interpolated
 
-    // Interpolated
+      // Styled
+      console.log("%c Stylized Text", "font-size:20px;background:red");
 
-    // Styled
+      // warning!
 
-    // warning!
+      // Error :|
 
-    // Error :|
+      // Info
 
-    // Info
+      // Testing
+      console.assert(1 == 2, "Not true");
+      console.assert(1 == 1, "Not true");
 
-    // Testing
+      // clearing
+      console.clear(); //put this at the end of scripts for a clean console
 
-    // clearing
+      // Viewing DOM Elements
+      console.log(document.querySelector("p"));
+      console.dir(document.querySelector("p"));
 
-    // Viewing DOM Elements
+      // Grouping together
+      console.clear(); //put this at the end of scripts for a clean console
+      dogs.forEach((dog) => {
+        console.groupCollapsed(dog.name);
+        console.log(dog.name + " " + dog.age);
+        console.groupEnd(dog.name);
+      });
+      // counting
 
-    // Grouping together
-
-    // counting
-
-    // timing
-
-  </script>
-</body>
+      // timing
+      console.time("starting now: ");
+      fetch("https://api.github.com/users/wesbos")
+        .then((data) => data.json())
+        .then((data) => {
+          console.log(data);
+          console.timeEnd("starting now: ");
+        });
+    </script>
+  </body>
 </html>
