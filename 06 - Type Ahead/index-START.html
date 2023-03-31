@@ -1,23 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <form class="search-form">
+      <input type="text" class="search" placeholder="City or State" />
+      <ul class="suggestions">
+        <li>Filter for a city</li>
+        <li>or a state</li>
+      </ul>
+    </form>
+    <script>
+      const endpoint =
+        "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+      const cities = [];
+      fetch(endpoint)
+        .then((res) => res.json())
+        .then((res) => {
+          cities.push(...res);
+        });
 
-  <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
-    <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a state</li>
-    </ul>
-  </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+      const searchTerm = document
+        .querySelector(".search")
+        .addEventListener("input", handleSearch);
+      const suggestions = document.querySelector(".suggestions");
 
-</script>
-</body>
+      function formatNumber(pop) {
+        const ans = pop
+          .toString()
+          .split("")
+          .reverse()
+          .map((num, ind) => (ind > 0 && ind % 3 === 0 ? (num += ",") : num))
+          .reverse()
+          .join("");
+        return ans;
+      }
+
+      function populateResults(results, searchTerm) {
+        const resultHtml = results
+          .map((place) => {
+            const regex = new RegExp(searchTerm, "gi");
+            const city = place.city.replace(
+              regex,
+              `<span class="hl">${searchTerm}</span>`
+            );
+            return `<li><span>${city}, ${
+              place.state
+            }</span><span>Count:${formatNumber(place.population)}</span></li>`;
+          })
+          .join("");
+        suggestions.innerHTML = resultHtml;
+      }
+      function handleSearch() {
+        const regex = new RegExp(this.value, "gi");
+
+        const filteredPlaces = cities.filter(
+          (place) => place.city.match(regex) || place.state.match(regex)
+        );
+        populateResults(filteredPlaces, this.value);
+      }
+    </script>
+  </body>
 </html>
