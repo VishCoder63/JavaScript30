@@ -1,41 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mouse Shadow</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mouse Shadow</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <div class="hero">
+      <h1>🔥WOAH!</h1>
+      <!-- <h1 contenteditable>🔥WOAH!</h1> -->
+    </div>
 
-  <div class="hero">
-    <h1 contenteditable>🔥WOAH!</h1>
-  </div>
+    <style>
+      html {
+        color: black;
+        font-family: sans-serif;
+      }
 
-  <style>
-  html {
-    color: black;
-    font-family: sans-serif;
-  }
+      body {
+        margin: 0;
+      }
 
-  body {
-    margin: 0;
-  }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+        border: 1px solid red;
+      }
 
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-  }
+      h1 {
+        text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+        font-size: 100px;
+      }
+    </style>
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
-  </style>
-
-<script>
-</script>
-</body>
+    <script>
+      const hero = document.querySelector(".hero");
+      const h1 = document.querySelector("h1");
+      const limit = 100;
+      function handleMouseMove(e) {
+        const { offsetWidth: width, offsetHeight: height } = hero;
+        let { offsetX: x, offsetY: y } = e;
+        if (this !== e.target) {
+          x += e.target.offsetLeft;
+          y += e.target.offsetTop;
+        }
+        const xNorm = Math.round((x / width) * limit - limit / 2);
+        const yNorm = Math.round((y / height) * limit - limit / 2);
+        // console.log({ xNorm, yNorm });
+        h1.style.textShadow = `${xNorm}px ${yNorm}px 0 rgba(255,0,255,0.7),
+      ${xNorm * -1}px ${yNorm}px 0 rgba(0,255,255,0.7),
+      ${yNorm}px ${xNorm * -1}px 0 rgba(0,255,0,0.7),
+      ${yNorm * -1}px ${xNorm}px 0 rgba(0,0,255,0.7)`;
+      }
+      hero.addEventListener("mousemove", handleMouseMove);
+    </script>
+  </body>
 </html>
